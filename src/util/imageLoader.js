@@ -5,7 +5,8 @@ function isProtocolLink(url) {
 }
 
 function imageLoader({ src, width }) {
-  return `${!isProtocolLink(src) && !!assetPrefix ? assetPrefix : ""}${src}`;
+  return `${src}`;
+  // return `${!isProtocolLink(src) && !!assetPrefix ? assetPrefix : ""}${src}`;e
 }
 
 export default imageLoader;
