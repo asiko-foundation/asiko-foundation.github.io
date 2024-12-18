@@ -32,7 +32,7 @@ jobs:
 
       - name: Simple deploy with git
         uses: rdarida/simple-github-pages-deploy-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GHB_DEFAULT_TOKEN }}
         with: # optional
           git-base-folder: "dist"
-          git-user: 'YewandeOjo'
-          git-email: 'yewande_oluwafisayo@outlook.com'
