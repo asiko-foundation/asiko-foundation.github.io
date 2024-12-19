@@ -3,9 +3,10 @@ const { name } = require("./package.json");
 
 const isProd = process.env.NODE_ENV === "production";
 console.log("isProd", isProd);
-const basePath = isProd ? `/${name}` : "";
-// const basePath = "";
-const assetPrefix = ``;
+// const basePath = isProd ? `/${name}` : "";
+const basePath = "";
+// const assetPrefix = ``;
+const assetPrefix = `${basePath}`;
 
 module.exports = {
   reactStrictMode: true,
