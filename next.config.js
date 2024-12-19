@@ -6,7 +6,6 @@ console.log("isProd", isProd);
 // const basePath = isProd ? `/${name}` : "";
 const basePath = "";
 // const assetPrefix = ``;
-// const assetPrefix = isProd ? `/${name}` : "";
 const assetPrefix = `${basePath}`;
 
 module.exports = {

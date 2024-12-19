@@ -36,5 +36,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GHB_DEFAULT_TOKEN }}
         with: # optional
           git-base-folder: "dist"
-      - run: |
-          ls -al
