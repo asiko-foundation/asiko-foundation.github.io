@@ -9,7 +9,16 @@ const layoutType = {
   setIsChatOpen: "setIsChatOpen",
 };
 
-function layoutReducer(state, action) {
+interface State {
+  isChatOpen: boolean;
+}
+interface Action {
+  type: string;
+  value: boolean | string | number | object;
+}
+const initialState: State = { isChatOpen: false };
+
+function layoutReducer(state: any, action: Action) {
   if (action.type === layoutType.setIsChatOpen) {
     return { ...state, isChatOpen: action.value };
   }
@@ -21,7 +30,7 @@ export default function ClientLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [state, dispatch] = useReducer(layoutReducer, { isChatOpen: false });
+  const [state, dispatch] = useReducer(layoutReducer, initialState);
   const setIsChatOpen = (isopen: boolean) =>
     dispatch({ type: layoutType.setIsChatOpen, value: isopen });
 

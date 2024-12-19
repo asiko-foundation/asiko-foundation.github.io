@@ -29,14 +29,14 @@ export function PopupWidget(props: PopUpProps) {
   const buttonRef = useRef(null);
 
   const userName = useWatch({ control, name: "name", defaultValue: "Someone" });
-  const currentButton = buttonRef && buttonRef.current;
+  const currentButton: any = buttonRef && buttonRef.current;
   const isOpen = !!currentButton && !!currentButton.attributes["data-open"];
 
   useEffect(() => {
     if (!!isChatOpen && !isOpen) {
       currentButton && currentButton.click();
     }
-  }, [isChatOpen, isOpen]);
+  }, [isChatOpen, isOpen, currentButton]);
 
   const onSubmit = async (data: any, e: any) => {
     console.log(data);
