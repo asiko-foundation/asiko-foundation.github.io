@@ -9,6 +9,7 @@
         "start": "next start",
         "lint": "next lint",
         "clean": "rm -rf node_modules .next build dist",
+        "clean-dev": "yarn clean && yarn && yarn dev",
         "clean-build": "yarn clean && yarn && yarn build"
     },
     "repository": {
