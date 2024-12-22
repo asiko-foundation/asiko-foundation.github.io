@@ -4,6 +4,10 @@ import { useReducer, use } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PopupWidget } from "@/components/PopupWidget";
+import {
+  ChatOpenContext,
+  SetChatOpenContext,
+} from "@/data/clientLayoutContext";
 
 const layoutType = {
   setIsChatOpen: "setIsChatOpen",
@@ -31,18 +35,19 @@ export default function ClientLayout({
   children: React.ReactNode;
 }>) {
   const [state, dispatch] = useReducer(layoutReducer, initialState);
-  const setIsChatOpen = (isopen: boolean) =>
+
+  function setIsChatOpen(isopen: boolean) {
     dispatch({ type: layoutType.setIsChatOpen, value: isopen });
+  }
 
   return (
-    <>
-      <Navbar setIsChatOpen={setIsChatOpen} />
-      <div>{children}</div>
-      <Footer />
-      <PopupWidget
-        isChatOpen={state.isChatOpen}
-        setIsChatOpen={setIsChatOpen}
-      />
-    </>
+    <ChatOpenContext.Provider value={state.isChatOpen}>
+      <SetChatOpenContext.Provider value={setIsChatOpen}>
+        <Navbar />
+        <div className="flex grow">{children}</div>
+        <Footer />
+        <PopupWidget />
+      </SetChatOpenContext.Provider>
+    </ChatOpenContext.Provider>
   );
 }

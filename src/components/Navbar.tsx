@@ -1,15 +1,15 @@
 "use client";
+import { useContext } from "react";
 import Link from "next/link";
 import ThemeChanger from "./DarkSwitch";
 import Image from "next/image";
 import { Disclosure } from "@headlessui/react";
+import { cTas } from "./data";
+import { SetChatOpenContext } from "@/data/clientLayoutContext";
 
-interface NavbarProps extends React.PropsWithChildren {
-  setIsChatOpen: (_: boolean) => void;
-}
+export const Navbar = () => {
+  const setIsChatOpen = useContext(SetChatOpenContext);
 
-export const Navbar = (props: NavbarProps) => {
-  const { setIsChatOpen } = props;
   const navigation = [{ title: "Home", url: "#" }];
 
   return (
@@ -38,11 +38,9 @@ export const Navbar = (props: NavbarProps) => {
             <Link
               href="#"
               className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5"
-              onClick={() => {
-                setIsChatOpen(true);
-              }}
+              onClick={() => setIsChatOpen(true)}
             >
-              Talk to Us
+              {cTas.nav}
             </Link>
           </div>
         </div>
@@ -94,7 +92,7 @@ export const Navbar = (props: NavbarProps) => {
                       close();
                     }}
                   >
-                    Talk to Us
+                    {cTas.nav}
                   </Link>
                 </>
               </Disclosure.Panel>

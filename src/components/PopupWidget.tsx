@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import {
   Disclosure,
@@ -7,14 +7,15 @@ import {
   DisclosurePanel,
   DisclosureButton,
 } from "@headlessui/react";
+import {
+  ChatOpenContext,
+  SetChatOpenContext,
+} from "@/data/clientLayoutContext";
 
-interface PopUpProps extends React.PropsWithChildren {
-  isChatOpen: boolean;
-  setIsChatOpen: (_: boolean) => void;
-}
+export function PopupWidget() {
+  const isChatOpen = useContext(ChatOpenContext);
+  const setIsChatOpen = useContext(SetChatOpenContext);
 
-export function PopupWidget(props: PopUpProps) {
-  const { isChatOpen, setIsChatOpen } = props;
   const {
     register,
     handleSubmit,

@@ -56,5 +56,9 @@ const benefitTwo = {
   ],
 };
 
+const cTas = {
+  nav: "Share with us",
+  homeHero: "Let us Talk",
+};
 
-export {benefitOne, benefitTwo};
+export { benefitOne, benefitTwo, cTas };
