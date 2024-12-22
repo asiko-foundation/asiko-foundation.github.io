@@ -41,31 +41,31 @@ export function PopupWidget() {
 
   const onSubmit = async (data: any, e: any) => {
     console.log(data);
-    await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(data, null, 2),
-    })
-      .then(async (response) => {
-        let json = await response.json();
-        if (json.success) {
-          setIsSuccess(true);
-          setMessage(json.message);
-          e.target.reset();
-          reset();
-        } else {
-          setIsSuccess(false);
-          setMessage(json.message);
-        }
-      })
-      .catch((error) => {
-        setIsSuccess(false);
-        setMessage("Client Error. Please check the console.log for more info");
-        console.log(error);
-      });
+    // await fetch("https://api.web3forms.com/submit", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //   },
+    //   body: JSON.stringify(data, null, 2),
+    // })
+    //   .then(async (response) => {
+    //     let json = await response.json();
+    //     if (json.success) {
+    //       setIsSuccess(true);
+    //       setMessage(json.message);
+    //       e.target.reset();
+    //       reset();
+    //     } else {
+    //       setIsSuccess(false);
+    //       setMessage(json.message);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     setIsSuccess(false);
+    //     setMessage("Client Error. Please check the console.log for more info");
+    //     console.log(error);
+    //   });
   };
 
   return (
@@ -79,7 +79,7 @@ export function PopupWidget() {
                 onClick={() => !!open && setIsChatOpen(false)}
                 className="fixed z-40 flex items-center justify-center transition duration-300 bg-indigo-500 rounded-full shadow-lg right-5 bottom-5 w-14 h-14 focus:outline-none hover:bg-indigo-600 focus:bg-indigo-600 ease"
               >
-                <span className="sr-only">Open Contact form Widget</span>
+                <span className="sr-only">Open Contact form</span>
                 <Transition
                   show={!open}
                   enter="transition duration-200 transform ease"
@@ -141,12 +141,16 @@ export function PopupWidget() {
                   <div className="flex flex-col items-center justify-center h-32 p-5 bg-indigo-600">
                     <h3 className="text-lg text-white">How can we help?</h3>
                     <p className="text-white opacity-50">
-                      We usually respond in a few hours
+                      We are here to listen to you.
                     </p>
                   </div>
-                  <div className="flex-grow h-full p-6 overflow-auto bg-gray-50 ">
+                  <div className="flex-grow h-full p-6 overflow-auto bg-gray-50">
                     {!isSubmitSuccessful && (
-                      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                      <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        noValidate
+                        className="flex flex-col h-full"
+                      >
                         <input
                           type="hidden"
                           value="YOUR_ACCESS_KEY_HERE"
@@ -174,14 +178,14 @@ export function PopupWidget() {
                             htmlFor="full_name"
                             className="block mb-2 text-sm text-gray-600 dark:text-gray-400"
                           >
-                            Full Name
+                            Name
                           </label>
                           <input
                             type="text"
                             id="full_name"
-                            placeholder="John Doe"
+                            placeholder="What name should we call you?"
                             {...register("name", {
-                              required: "Full name is required",
+                              required: "Please share a name to call you",
                               maxLength: 80,
                             })}
                             className={`w-full px-3 py-2 text-gray-600 placeholder-gray-300 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring   ${
@@ -207,14 +211,13 @@ export function PopupWidget() {
                           <input
                             type="email"
                             id="email"
+                            placeholder="How can we reach you?"
                             {...register("email", {
-                              required: "Enter your email",
                               pattern: {
                                 value: /^\S+@\S+$/i,
                                 message: "Please enter a valid email",
                               },
                             })}
-                            placeholder="you@company.com"
                             className={`w-full px-3 py-2 text-gray-600 placeholder-gray-300 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring   ${
                               errors.email
                                 ? "border-red-600 focus:border-red-600 ring-red-100"
@@ -229,65 +232,40 @@ export function PopupWidget() {
                           )}
                         </div>
 
-                        <div className="mb-4">
-                          <label
-                            htmlFor="message"
-                            className="block mb-2 text-sm text-gray-600 dark:text-gray-400"
-                          >
-                            Your Message
-                          </label>
+                        <div className="flex flex-grow flex-col justify-end">
+                          <div className="mb-3">
+                            <button
+                              type="submit"
+                              className="w-full px-3 py-4 text-white bg-indigo-500 rounded-md focus:bg-indigo-600 focus:outline-none"
+                            >
+                              {isSubmitting ? (
+                                <svg
+                                  className="w-5 h-5 mx-auto text-white animate-spin"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <circle
+                                    className="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    strokeWidth="4"
+                                  ></circle>
+                                  <path
+                                    className="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                  ></path>
+                                </svg>
+                              ) : (
+                                "Continue"
+                              )}
+                            </button>
+                          </div>
+                        </div>
 
-                          <textarea
-                            rows={4}
-                            id="message"
-                            {...register("message", {
-                              required: "Enter your Message",
-                            })}
-                            placeholder="Your Message"
-                            className={`w-full px-3 py-2 text-gray-600 placeholder-gray-300 bg-white border border-gray-300 rounded-md h-28 focus:outline-none focus:ring   ${
-                              errors.message
-                                ? "border-red-600 focus:border-red-600 ring-red-100"
-                                : "border-gray-300 focus:border-indigo-600 ring-indigo-100"
-                            }`}
-                            required
-                          ></textarea>
-                          {errors.message && (
-                            <div className="mt-1 text-sm text-red-400 invalid-feedback">
-                              {errors.message.message as string}
-                            </div>
-                          )}
-                        </div>
-                        <div className="mb-3">
-                          <button
-                            type="submit"
-                            className="w-full px-3 py-4 text-white bg-indigo-500 rounded-md focus:bg-indigo-600 focus:outline-none"
-                          >
-                            {isSubmitting ? (
-                              <svg
-                                className="w-5 h-5 mx-auto text-white animate-spin"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                              >
-                                <circle
-                                  className="opacity-25"
-                                  cx="12"
-                                  cy="12"
-                                  r="10"
-                                  stroke="currentColor"
-                                  strokeWidth="4"
-                                ></circle>
-                                <path
-                                  className="opacity-75"
-                                  fill="currentColor"
-                                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                ></path>
-                              </svg>
-                            ) : (
-                              "Send Message"
-                            )}
-                          </button>
-                        </div>
                         <p
                           className="text-xs text-center text-gray-400"
                           id="result"
